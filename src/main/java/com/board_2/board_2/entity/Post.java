@@ -2,8 +2,6 @@ package com.board_2.board_2.entity;
 
 import java.time.LocalDate;
 
-import org.w3c.dom.Text;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

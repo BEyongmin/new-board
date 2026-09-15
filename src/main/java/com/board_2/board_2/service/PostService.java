@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import com.board_2.board_2.entity.Post;
 import com.board_2.board_2.exception.PostNotFoundException;
@@ -65,5 +64,4 @@ public class PostService {
         
         return post.getId();
     }
-
 }
