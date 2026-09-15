@@ -16,9 +16,6 @@ import com.board_2.board_2.service.CommentService;
 import com.board_2.board_2.service.PostService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 
 @Controller 
