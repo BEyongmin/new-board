@@ -96,10 +96,15 @@
           description="첫 댓글을 남겨보세요!" />
       </c:if>
 
-      <%-- TODO: 백엔드 Controller 완성 후 실제로 동작함 --%>
       <form class="comment-form field" method="post" action="${pageContext.request.contextPath}/posts/${post.id}/comments">
-        <label class="field-label" for="comment">댓글 작성</label>
-        <textarea id="comment" name="content" class="p-inputtext" rows="3" placeholder="해결 방법이나 참고 자료를 알려주세요"></textarea>
+        <div class="field">
+          <label class="field-label" for="commentAuthor">닉네임</label>
+          <input type="text" id="commentAuthor" name="author" class="p-inputtext" placeholder="닉네임을 입력하세요" maxlength="20" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="comment">댓글 작성</label>
+          <textarea id="comment" name="content" class="p-inputtext" rows="3" placeholder="해결 방법이나 참고 자료를 알려주세요"></textarea>
+        </div>
         <div class="row-end">
           <button type="submit" class="p-button">댓글 등록</button>
         </div>
@@ -112,7 +117,6 @@
       <p>댓글 ${fn:length(commentList)}개도 함께 사라지고, 되돌릴 수 없어요.</p>
       <div class="dialog-footer">
         <button type="button" class="p-button p-button-help" onclick="document.getElementById('deleteDialog').close()">취소</button>
-        <%-- TODO: 백엔드 Controller 완성 후 실제로 동작함 --%>
         <form method="post" action="${pageContext.request.contextPath}/posts/${post.id}/delete" style="display:inline">
           <button type="submit" class="p-button p-button-danger">삭제</button>
         </form>

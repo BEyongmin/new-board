@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.board_2.board_2.entity.Post;
 import com.board_2.board_2.exception.PostNotFoundException;
+import com.board_2.board_2.repository.CommentRepository;
 import com.board_2.board_2.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     // 1. 목록
     @Transactional (readOnly = true)
@@ -63,5 +65,14 @@ public class PostService {
         post.setContent(content);
         
         return post.getId();
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+
+        commentRepository.deleteByPostId(id);
+        postRepository.delete(post);
     }
 }
