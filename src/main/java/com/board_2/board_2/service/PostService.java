@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.board_2.board_2.entity.Post;
 import com.board_2.board_2.exception.PostNotFoundException;
-import com.board_2.board_2.repository.Postrepository;
+import com.board_2.board_2.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,12 +17,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public class PostService {
 
-    private final Postrepository postrepository;
+    private final PostRepository postRepository;
 
     // 1. 목록
     @Transactional (readOnly = true)
     public List<Post> getlist() {
-        return postrepository.findAllOrderByNoticeAndCreatedDateDesc();
+        return postRepository.findAllOrderByNoticeAndCreatedDateDesc();
     }
 
     // 2. 등록
@@ -36,16 +37,33 @@ public class PostService {
         post.setReplyCount(0L);
         post.setNotice(false);
 
-        Post savePost = postrepository.save(post);
+        Post savePost = postRepository.save(post);
         return savePost.getId();
     }
 
     @Transactional 
     public Post getDetail(Long id){
-        Post post = postrepository.findById(id)
+        Post post = postRepository.findById(id)
         .orElseThrow(()-> new PostNotFoundException("게시글을 찾을 수 없습니다."));
 
         post.setViewCount(post.getViewCount()+1);
         return post;
     }
+
+    @Transactional (readOnly = true)
+    public Post getPostForEdit(Long id) {
+        return postRepository.findById(id)
+                    .orElseThrow(()-> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+    }
+
+    @Transactional 
+    public Long update(Long id, String title, String content){
+        Post post = postRepository.findById(id).orElseThrow(()-> new PostNotFoundException("일시적인 오류로 업데이트가 불가능합니다."));
+
+        post.setTitle(title);
+        post.setContent(content);
+        
+        return post.getId();
+    }
+
 }

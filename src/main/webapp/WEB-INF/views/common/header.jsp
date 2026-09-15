@@ -20,7 +20,6 @@
           class="p-inputtext"
           placeholder="질문이나 해결 방법 검색"
           aria-label="게시글 검색"
-          readonly
         />
       </div>
       <a href="${pageContext.request.contextPath}/posts/write" class="p-button header-write">

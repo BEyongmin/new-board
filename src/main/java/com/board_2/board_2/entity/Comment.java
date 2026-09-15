@@ -20,7 +20,7 @@ public class Comment {
     @Column 
     private String author;
 
-    @Column 
+    @Column (length = 500, nullable = false)
     private String content;
 
     @Column 
