@@ -103,7 +103,7 @@
         </div>
         <div class="field">
           <label class="field-label" for="comment">댓글 작성</label>
-          <textarea id="comment" name="content" class="p-inputtext" rows="3" placeholder="해결 방법이나 참고 자료를 알려주세요"></textarea>
+          <textarea id="comment" name="content" class="p-inputtext" rows="3" maxlength = "500" placeholder="해결 방법이나 참고 자료를 알려주세요"></textarea>
         </div>
         <div class="row-end">
           <button type="submit" class="p-button">댓글 등록</button>
@@ -126,6 +126,7 @@
 </main>
 
 <script>
+  bindCounter('comment', 'comment-count', 500);
   document.getElementById('deleteDialog').addEventListener('click', function (e) {
     if (e.target === this) {
       this.close();

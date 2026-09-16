@@ -1402,3 +1402,36 @@ button.p-button {
   color: inherit;
   text-decoration: none;
 }
+
+dialog {
+  width: min(416px, calc(100vw - var(--space-xl)));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-surface);
+  padding: var(--space-lg);
+  color: var(--fg);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+dialog::backdrop {
+  background: color-mix(in srgb, var(--fg) 40%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+dialog h2 {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--type-section);
+  font-weight: var(--weight-medium);
+}
+
+dialog p {
+  margin: 0 0 var(--space-lg);
+  color: var(--body);
+  font-size: var(--type-body);
+  line-height: 24px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}

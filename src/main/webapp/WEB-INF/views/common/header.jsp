@@ -7,10 +7,10 @@
 --%>
 <header class="site-header">
   <div class="shell header-inner">
-    <div class="logo">
+    <a href="${pageContext.request.contextPath}/posts" class="logo">
       <span class="logo-mark" aria-hidden="true">M</span>
       <span class="logo-copy"><strong>개발 미션 게시판</strong></span>
-    </div>
+    </a>
 
     <div class="header-actions">
       <div class="search">
