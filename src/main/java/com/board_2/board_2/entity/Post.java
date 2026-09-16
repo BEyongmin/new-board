@@ -23,10 +23,10 @@ public class Post {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
     
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(length = 2000, nullable = false)
     private String content;
 
     @Column (nullable = false)

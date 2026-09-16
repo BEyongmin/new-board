@@ -36,18 +36,27 @@
     <section class="board-panel" aria-label="게시글 목록">
       <div class="board-toolbar">
         <%-- TODO: 필터 기능은 백엔드 연동 시 ?filter=all / ?filter=notice 형태로 구현 예정 --%>
+      <c:url var="allUrl" value="/posts">
+        <c:param name="keyword" value="${keyword}" />
+        <c:param name="sort" value="${sort}" />
+      </c:url>
+      <c:url var="noticeUrl" value="/posts">
+        <c:param name="keyword" value="${keyword}" />
+        <c:param name="filter" value="notice" />
+        <c:param name="sort" value="${sort}" />
+      </c:url>
         <div class="tabs" role="group" aria-label="게시글 필터">
-          <button type="button" class="tab is-active" aria-pressed="true">전체</button>
-          <button type="button" class="tab" aria-pressed="false">공지</button>
+          <a href="${allUrl}" class="tab${empty filter ? ' is-active' : ''}" aria-pressed="${empty filter}">전체</a>
+          <a href="${noticeUrl}" class="tab${filter == 'notice' ? ' is-active' : ''}" aria-pressed="${filter == 'notice'}">공지</a>
         </div>
         <div class="toolbar-meta">
           <p class="result-count">${fn:length(postList)}개의 글</p>
           <%-- TODO: 정렬 기능은 백엔드 연동 시 ?sort=view 형태로 구현 예정 --%>
           <label class="sort-control">
             <span class="sr-only">게시글 정렬</span>
-            <select>
-              <option selected>최신순</option>
-              <option>조회순</option>
+            <select onchange="changeSort(this.value)">
+              <option value="latest" ${empty sort || sort == 'latest' ? 'selected' : ''}>최신순</option>
+              <option value="view" ${sort == 'view' ? 'selected' : ''}>조회순</option>
             </select>
             <i class="pi pi-chevron-down" aria-hidden="true"></i>
           </label>
@@ -99,13 +108,62 @@
 
     <%-- TODO: 페이지네이션은 백엔드 연동 시 ?page=N 형태로 구현 예정 --%>
     <div class="pager" aria-label="페이지 이동 UI">
-      <span class="is-disabled" aria-hidden="true"><i class="pi pi-chevron-left"></i></span>
-      <span class="is-static" aria-current="page">1</span>
-      <span class="is-static">2</span>
-      <span class="is-static">3</span>
-      <span class="is-static" aria-label="다음 페이지"><i class="pi pi-chevron-right" aria-hidden="true"></i></span>
+    <c:choose>
+        <c:when test="${currentPage <= 1}">
+          <span class="is-disabled" aria-hidden="true"><i class="pi pi-chevron-left"></i></span>
+        </c:when>
+        <c:otherwise>
+          <c:url var="prevUrl" value="/posts">
+            <c:param name="keyword" value="${keyword}" />
+            <c:param name="filter" value="${filter}" />
+            <c:param name="sort" value="${sort}" />
+            <c:param name="page" value="${currentPage - 1}" />
+          </c:url>
+          <a href="${prevUrl}" aria-label="이전 페이지"><i class="pi pi-chevron-left"></i></a>
+        </c:otherwise>
+      </c:choose>
+
+      <c:forEach var="p" begin="1" end="${totalPages}">
+        <c:url var="pageUrl" value="/posts">
+          <c:param name="keyword" value="${keyword}" />
+          <c:param name="filter" value="${filter}" />
+          <c:param name="sort" value="${sort}" />
+          <c:param name="page" value="${p}" />
+        </c:url>
+        <c:choose>
+          <c:when test="${p == currentPage}">
+            <span class="is-static" aria-current="page">${p}</span>
+          </c:when>
+          <c:otherwise>
+            <a href="${pageUrl}">${p}</a>
+          </c:otherwise>
+        </c:choose>
+      </c:forEach>
+
+      <c:choose>
+        <c:when test="${currentPage >= totalPages}">
+          <span class="is-disabled" aria-hidden="true"><i class="pi pi-chevron-right"></i></span>
+        </c:when>
+        <c:otherwise>
+          <c:url var="nextUrl" value="/posts">
+            <c:param name="keyword" value="${keyword}" />
+            <c:param name="filter" value="${filter}" />
+            <c:param name="sort" value="${sort}" />
+            <c:param name="page" value="${currentPage + 1}" />
+          </c:url>
+          <a href="${nextUrl}" aria-label="다음 페이지"><i class="pi pi-chevron-right"></i></a>
+        </c:otherwise>
+      </c:choose>
   </div>
 
 </main>
 </body>
+<script>
+function changeSort(sortValue) {
+  var params = new URLSearchParams(window.location.search);
+  params.set('sort', sortValue);
+  params.set('page', '1');
+  window.location.href = '${pageContext.request.contextPath}/posts?' + params.toString();
+}
+</script>
 </html>

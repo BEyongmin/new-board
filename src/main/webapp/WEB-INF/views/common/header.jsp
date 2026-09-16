@@ -15,12 +15,16 @@
     <div class="header-actions">
       <div class="search">
         <i class="pi pi-search" aria-hidden="true"></i>
-        <input
-          type="search"
-          class="p-inputtext"
-          placeholder="질문이나 해결 방법 검색"
-          aria-label="게시글 검색"
-        />
+        <form>
+          <input
+            type="search"
+            name="keyword"
+            value="${keyword}"
+            class="p-inputtext"
+            placeholder="질문이나 해결 방법 검색"
+            aria-label="게시글 검색"
+          />
+        </form>
       </div>
       <a href="${pageContext.request.contextPath}/posts/write" class="p-button header-write">
         <i class="pi pi-plus" aria-hidden="true"></i>

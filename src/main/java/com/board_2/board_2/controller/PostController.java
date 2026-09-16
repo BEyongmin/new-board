@@ -2,6 +2,7 @@ package com.board_2.board_2.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +28,47 @@ public class PostController {
     private final CommentService commentService;
 
     @RequestMapping ("/")
-    public String home(Model model) {
-        model.addAttribute(postService.getlist());
+    public String home(@RequestParam(name = "keyword", required = false)  String keyword,
+                    @RequestParam(name = "filter", required = false) String filter, 
+                    @RequestParam(name = "sort",required = false) String sort, 
+                    @RequestParam(name = "page", defaultValue = "1") int page,
+                    Model model) {
+
+            boolean noticeOnly = "notice".equals(filter);
+            int pageIndex = page - 1;
+            
+            Page<Post> postPage = postService.searchPage(keyword, noticeOnly, sort, pageIndex);
+
+            model.addAttribute("postList", postPage.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", postPage.getTotalPages());
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("filter", filter);
+            model.addAttribute("sort", sort);
+
         return "posts/list";
     }
 
     // 1. 목록
     @RequestMapping("/posts")
-    public String list(Model model) {   
-        model.addAttribute(postService.getlist());
+    public String list(@RequestParam(name = "keyword", required = false)  String keyword,
+                    @RequestParam(name = "filter", required = false) String filter, 
+                    @RequestParam(name = "sort",required = false) String sort, 
+                    @RequestParam(name = "page", defaultValue = "1") int page,
+                            Model model) {
+
+            boolean noticeOnly = "notice".equals(filter);
+            int pageIndex = page - 1;
+            
+            Page<Post> postPage = postService.searchPage(keyword, noticeOnly, sort, pageIndex);
+
+            model.addAttribute("postList", postPage.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", postPage.getTotalPages());
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("filter", filter);
+            model.addAttribute("sort", sort);
+
         return "posts/list";
     }
 

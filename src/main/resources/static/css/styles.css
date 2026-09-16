@@ -294,6 +294,11 @@ textarea {
 }
 
 .tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
   min-width: 64px;
   min-height: var(--control-compact);
   padding: 0 var(--space-md);

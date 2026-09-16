@@ -1,8 +1,11 @@
 package com.board_2.board_2.service;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +22,19 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-
+    
     // 1. 목록
     @Transactional (readOnly = true)
-    public List<Post> getlist() {
-        return postRepository.findAllOrderByNoticeAndCreatedDateDesc();
+    public Page<Post> searchPage(String keyword, boolean noticeOnly, String sort, int page){
+        if (keyword != null && keyword.isBlank()) {
+            keyword = null;
+        }
+
+        Sort sortOption = "view".equals(sort) ? Sort.by(Sort.Direction.DESC, "viewCount") : Sort.by(Sort.Direction.DESC, "createdDate");
+        
+        Pageable pageable = PageRequest.of(page, 10, sortOption);
+
+        return postRepository.search(keyword, noticeOnly, pageable);
     }
 
     // 2. 등록
