@@ -29,7 +29,7 @@ public class Post {
     @Column(length = 2000, nullable = false)
     private String content;
 
-    @Column (nullable = false)
+    @Column (length = 20, nullable = false)
     private String author;
 
     @Column

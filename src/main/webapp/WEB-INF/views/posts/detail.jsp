@@ -11,7 +11,7 @@
     - commentList : List<Comment> (author, content, createdDate)
 --%>
 
-<c:set var="pageTitle" value="${post.title}" />
+<c:set var="pageTitle" value="${fn:escapeXml(post.title)}" />
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -27,7 +27,7 @@
     </a>
 
     <article class="card article-card">
-      <h1 class="page-title article-title">${post.title}</h1>
+      <h1 class="page-title article-title">${fn:escapeXml(post.title)}</h1>
 
       <div class="post-head">
         <div class="author">
@@ -50,7 +50,7 @@
       <hr class="rule" />
 
       <%-- white-space: pre-line 스타일이 styles.css에 있어야 줄바꿈이 그대로 보입니다 --%>
-      <div class="post-body">${post.content}</div>
+      <div class="post-body">${fn:escapeXml(post.content)}</div>
 
       <div class="post-actions">
         <button type="button" class="p-button p-button-danger" onclick="document.getElementById('deleteDialog').showModal()">

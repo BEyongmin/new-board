@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <%--
   게시글 작성 / 수정 폼 (form.jsp) - 두 역할을 한 파일이 겸함
   Controller가 post attribute를 넘기면 수정 모드, 안 넘기면 작성 모드로 동작합니다.
 --%>
 
-<c:set var="pageTitle" value="${empty post ? '새 글 작성' : '글 수정'}" />
+<c:set var="pageTitle" value="${isEdit ? '새 글 작성' : '글 수정'}" />
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,18 +24,18 @@
 
     <section class="page-intro page-intro--compact">
       <div>
-        <h1 class="page-title">${empty post ? '새 글 작성' : '글 수정'}</h1>
+        <h1 class="page-title">${isEdit ? '새 글 작성' : '글 수정'}</h1>
         <p class="page-description">질문이나 해결 방법을 작성하면 목록에 바로 보여요.</p>
       </div>
     </section>
 
     <div class="write-layout">
       <c:choose>
-        <c:when test="${empty post}">
+        <c:when test="${not isEdit}">
           <c:set var="formAction" value="${pageContext.request.contextPath}/posts" />
         </c:when>
         <c:otherwise>
-          <c:set var="formAction" value="${pageContext.request.contextPath}/posts/${post.id}" />
+          <c:set var="formAction" value="${pageContext.request.contextPath}/posts/${postId}" />
         </c:otherwise>
       </c:choose>
 
@@ -53,10 +54,14 @@
             placeholder="예: 페이지네이션 쿼리는 어떻게 넘기시나요?"
             aria-describedby="title-count"
             maxlength="100"
+            required
           />
           <div class="field-foot">
             <span class="field-hint" id="title-count">0 / 100자</span>
           </div>
+          <c:if test="${not empty errors.title}">
+            <p class="field-error">${errors.title}</p>
+          </c:if>
         </div>
 
         <div class="field">
@@ -73,10 +78,14 @@
             placeholder="목록에 표시될 이름"
             aria-describedby="author-count"
             maxlength="20"
+            required
           />
           <div class="field-foot">
             <span class="field-hint" id="author-count">0 / 20자</span>
           </div>
+          <c:if test="${not empty errors.author}">
+            <p class="field-error">${errors.author}</p>
+          </c:if>
         </div>
 
         <div class="field">
@@ -92,10 +101,14 @@
             placeholder="막힌 부분, 시도해본 방법, 궁금한 점을 차례로 적어보세요"
             aria-describedby="content-count"
             maxlength="2000"
+            required
           >${fn:escapeXml(post.content)}</textarea>
           <div class="field-foot">
             <span class="field-hint" id="content-count">0 / 2,000자</span>
           </div>
+          <c:if test="${not empty errors.content}">
+            <p class="field-error">${errors.content}</p>
+          </c:if>
         </div>
 
         <div class="form-footer">
@@ -104,7 +117,7 @@
           </button>
           <button type="submit" class="p-button btn-xl">
             <i class="pi pi-check" aria-hidden="true"></i>
-            <span>${empty post ? '글 등록' : '수정 완료'}</span>
+            <span>${isEdit ? '글 등록' : '수정 완료'}</span>
           </button>
         </div>
       </form>

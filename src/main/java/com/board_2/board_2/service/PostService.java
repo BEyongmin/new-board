@@ -41,11 +41,11 @@ public class PostService {
 
     // 2. 등록
     @Transactional
-    public Long create(String title ,String author, String contect){
+    public Long create(String title ,String author, String content){
         Post post = new Post();
         post.setTitle(title);
         post.setAuthor(author);
-        post.setContent(contect);
+        post.setContent(content);
         post.setCreatedDate(LocalDate.now());
         post.setViewCount(0L);
         post.setReplyCount(0L);
@@ -57,10 +57,12 @@ public class PostService {
 
     @Transactional 
     public Post getDetail(Long id){
+
+        postRepository.increaseViewCount(id); 
+
         Post post = postRepository.findById(id)
         .orElseThrow(()-> new PostNotFoundException("게시글을 찾을 수 없습니다."));
 
-        post.setViewCount(post.getViewCount()+1);
         return post;
     }
 
@@ -71,10 +73,11 @@ public class PostService {
     }
 
     @Transactional 
-    public Long update(Long id, String title, String content){
+    public Long update(Long id, String title, String author, String content){
         Post post = postRepository.findById(id).orElseThrow(()-> new PostNotFoundException("일시적인 오류로 업데이트가 불가능합니다."));
 
         post.setTitle(title);
+        post.setAuthor(author);
         post.setContent(content);
         
         return post.getId();
