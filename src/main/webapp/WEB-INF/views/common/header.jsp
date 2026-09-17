@@ -16,7 +16,7 @@
     <div class="header-actions">
       <div class="search">
         <i class="pi pi-search" aria-hidden="true"></i>
-        <form>
+        <form action="${pageContext.request.contextPath}/posts" method="get">
           <input
             type="search"
             name="keyword"

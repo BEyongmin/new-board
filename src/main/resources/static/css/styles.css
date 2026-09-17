@@ -231,6 +231,7 @@ textarea {
   max-width: 768px;
   font-size: var(--type-title);
   line-height: 45px;
+  overflow-wrap: anywhere;
 }
 
 .page-description {

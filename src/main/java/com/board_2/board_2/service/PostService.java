@@ -30,6 +30,10 @@ public class PostService {
             keyword = null;
         }
 
+        if (keyword != null) {
+            keyword = escapeLikeWildcards(keyword);
+        }
+
     Sort sortOption = "view".equals(sort)
             ? Sort.by(Sort.Direction.DESC, "viewCount").and(Sort.by(Sort.Direction.DESC, "id"))
             : Sort.by(Sort.Direction.DESC, "createdDate").and(Sort.by(Sort.Direction.DESC, "id"));
@@ -37,6 +41,13 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, 10, sortOption);
 
         return postRepository.search(keyword, noticeOnly, pageable);
+    }
+
+    private String escapeLikeWildcards(String keyword) {
+        return keyword
+                .replace("\\", "\\\\")
+                .replace("%", "\\%")
+                .replace("_", "\\_");
     }
 
     // 2. 등록

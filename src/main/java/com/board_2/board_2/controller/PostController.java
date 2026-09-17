@@ -5,25 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.board_2.board_2.dto.PostCreateRequest;
 import com.board_2.board_2.dto.PostUpdateRequest;
 import com.board_2.board_2.entity.Comment;
 import com.board_2.board_2.entity.Post;
-import com.board_2.board_2.exception.PostNotFoundException;
 import com.board_2.board_2.service.CommentService;
 import com.board_2.board_2.service.PostService;
 
@@ -46,6 +42,10 @@ public class PostController {
                             Model model) {
 
             boolean noticeOnly = "notice".equals(filter);
+            
+            if (page < 1) {
+                page = 1;
+            }
             int pageIndex = page - 1;
             
             Page<Post> postPage = postService.searchPage(keyword, noticeOnly, sort, pageIndex);
@@ -56,6 +56,7 @@ public class PostController {
             model.addAttribute("keyword", keyword);
             model.addAttribute("filter", filter);
             model.addAttribute("sort", sort);
+            model.addAttribute("totalElements", postPage.getTotalElements());
 
         return "posts/list";
     }
@@ -135,11 +136,5 @@ public class PostController {
         
         return "redirect:/posts";
     }
-    
-    @ExceptionHandler(PostNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handlePostNotFound(PostNotFoundException ex, Model model) {
-        model.addAttribute("errorMessage", ex.getMessage());
-        return "posts/not-found";
-    }
+
 }

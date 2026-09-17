@@ -50,7 +50,7 @@
           <a href="${noticeUrl}" class="tab${filter == 'notice' ? ' is-active' : ''}" aria-pressed="${filter == 'notice'}">공지</a>
         </div>
         <div class="toolbar-meta">
-          <p class="result-count">${fn:length(postList)}개의 글</p>
+          <p class="result-count">${totalElements}개의 글</p>
           <%-- TODO: 정렬 기능은 백엔드 연동 시 ?sort=view 형태로 구현 예정 --%>
           <label class="sort-control">
             <span class="sr-only">게시글 정렬</span>
@@ -98,10 +98,20 @@
         </ul>
 
         <c:if test="${empty postList}">
-          <ui:contentState
-            icon="pi-inbox"
-            title="아직 등록된 게시글이 없어요"
-            description="첫 번째 글을 남겨보세요!" />
+          <c:choose>
+            <c:when test="${not empty keyword}">
+              <ui:contentState
+                icon="pi-search"
+                title="검색 결과가 없어요"
+                description="다른 검색어로 다시 시도해보세요." />
+            </c:when>
+            <c:otherwise>
+              <ui:contentState
+                icon="pi-inbox"
+                title="아직 등록된 게시글이 없어요"
+                description="첫 번째 글을 남겨보세요!" />
+            </c:otherwise>
+          </c:choose>
         </c:if>
       </div>
     </section>
