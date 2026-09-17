@@ -78,10 +78,10 @@
             <span class="comment-face" aria-hidden="true">${fn:substring(comment.author, 0, 1)}</span>
             <div>
               <div class="author-name">
-                ${comment.author}
+                ${fn:escapeXml(comment.author)}
                 <span class="author-date comment-when">${comment.createdDate}</span>
               </div>
-              <p class="comment-text">${comment.content}</p>
+              <p class="comment-text">${fn:escapeXml(comment.content)}</p>
             </div>
           </li>
         </c:forEach>
@@ -95,6 +95,10 @@
           title="아직 댓글이 없어요"
           description="첫 댓글을 남겨보세요!" />
       </c:if>
+
+        <c:if test="${not empty commentError}">
+          <p class="field-error">${commentError}</p>
+        </c:if>
 
       <form class="comment-form field" method="post" action="${pageContext.request.contextPath}/posts/${post.id}/comments">
         <div class="field">

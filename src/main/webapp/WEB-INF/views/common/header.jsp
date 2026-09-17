@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <%--
   공통 <header> 조각 (header.jsp)
@@ -19,7 +20,7 @@
           <input
             type="search"
             name="keyword"
-            value="${keyword}"
+            value="${fn:escapeXml(keyword)}"
             class="p-inputtext"
             placeholder="질문이나 해결 방법 검색"
             aria-label="게시글 검색"

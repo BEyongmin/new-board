@@ -30,7 +30,9 @@ public class PostService {
             keyword = null;
         }
 
-        Sort sortOption = "view".equals(sort) ? Sort.by(Sort.Direction.DESC, "viewCount") : Sort.by(Sort.Direction.DESC, "createdDate");
+    Sort sortOption = "view".equals(sort)
+            ? Sort.by(Sort.Direction.DESC, "viewCount").and(Sort.by(Sort.Direction.DESC, "id"))
+            : Sort.by(Sort.Direction.DESC, "createdDate").and(Sort.by(Sort.Direction.DESC, "id"));
         
         Pageable pageable = PageRequest.of(page, 10, sortOption);
 

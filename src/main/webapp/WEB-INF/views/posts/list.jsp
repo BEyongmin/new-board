@@ -74,12 +74,12 @@
                   </c:if>
                   <h2 class="post-item-title">
                     <a href="${pageContext.request.contextPath}/posts/${post.id}">
-                      <span>${post.title}</span>
+                      <span>${fn:escapeXml(post.title)}</span>
                     </a>
                   </h2>
                 </div>
                 <div class="post-item-meta">
-                  <span class="post-author">${post.author}</span>
+                  <span class="post-author">${fn:escapeXml(post.author)}</span>
                   <span class="sep"></span>
                   <span>${post.createdDate}</span>
                   <span class="sep"></span>

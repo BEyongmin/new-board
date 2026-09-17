@@ -49,7 +49,7 @@
             id="title"
             name="title"
             class="p-inputtext"
-            value="${post.title}"
+            value="${fn:escapeXml(post.title)}"
             placeholder="예: 페이지네이션 쿼리는 어떻게 넘기시나요?"
             aria-describedby="title-count"
             maxlength="100"
@@ -69,7 +69,7 @@
             id="author"
             name="author"
             class="p-inputtext"
-            value="${post.author}"
+            value="${fn:escapeXml(post.author)}"
             placeholder="목록에 표시될 이름"
             aria-describedby="author-count"
             maxlength="20"
@@ -92,7 +92,7 @@
             placeholder="막힌 부분, 시도해본 방법, 궁금한 점을 차례로 적어보세요"
             aria-describedby="content-count"
             maxlength="2000"
-          >${post.content}</textarea>
+          >${fn:escapeXml(post.content)}</textarea>
           <div class="field-foot">
             <span class="field-hint" id="content-count">0 / 2,000자</span>
           </div>
