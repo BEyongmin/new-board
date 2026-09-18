@@ -21,16 +21,16 @@ public class Post {
     
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // 게시글 번호
 
     @Column(length = 100, nullable = false)
-    private String title;
+    private String title; // 게시글 제목
     
     @Column(length = 2000, nullable = false)
-    private String content;
+    private String content; // 게시글 내용
 
     @Column (length = 20, nullable = false)
-    private String author;
+    private String author; // 게시글 작성자
 
     @Column
     private LocalDate createdDate;

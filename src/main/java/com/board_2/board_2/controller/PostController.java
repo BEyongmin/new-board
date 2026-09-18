@@ -1,5 +1,6 @@
 package com.board_2.board_2.controller;
 
+import com.board_2.board_2.repository.CommentRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import com.board_2.board_2.entity.Comment;
 import com.board_2.board_2.entity.Post;
 import com.board_2.board_2.service.CommentService;
 import com.board_2.board_2.service.PostService;
-
+                                                                                                 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostController {
 
+    private final CommentRepository commentRepository;
     private final PostService postService;
     private final CommentService commentService;
     
@@ -59,7 +61,7 @@ public class PostController {
             model.addAttribute("totalElements", postPage.getTotalElements());
 
         return "posts/list";
-    }
+    } 
 
     // 2. 작성 양식
     @GetMapping("/posts/write")
@@ -132,6 +134,7 @@ public class PostController {
 
     @PostMapping("/posts/{id}/delete")
     public String delete(@PathVariable ("id") Long id) {
+        commentRepository.deleteById(id);
         postService.delete(id);
         
         return "redirect:/posts";

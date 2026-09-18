@@ -16,8 +16,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
      + "WHERE (:keyword IS NULL OR p.title LIKE CONCAT('%', :keyword, '%') ESCAPE '\\' OR p.content LIKE CONCAT('%', :keyword, '%') ESCAPE '\\') "
      + "AND (:noticeOnly = false OR p.notice = true) "
      + "ORDER BY p.notice DESC")
-Page<Post> search(@Param("keyword") String keyword,
-                    @Param("noticeOnly") boolean noticeOnly, Pageable pageable);
+    Page<Post> search(@Param("keyword") String keyword,
+                      @Param("noticeOnly") boolean noticeOnly, Pageable pageable);
                     
      @Modifying
      @Query("UPDATE Post p SET p.viewCount = p.viewCount + 1 WHERE p.id = :id")

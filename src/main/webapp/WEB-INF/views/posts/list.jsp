@@ -116,7 +116,6 @@
       </div>
     </section>
 
-    <%-- TODO: 페이지네이션은 백엔드 연동 시 ?page=N 형태로 구현 예정 --%>
     <div class="pager" aria-label="페이지 이동 UI">
     <c:choose>
         <c:when test="${currentPage <= 1}">

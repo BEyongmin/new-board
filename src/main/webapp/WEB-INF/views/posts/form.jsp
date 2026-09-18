@@ -24,7 +24,7 @@
 
     <section class="page-intro page-intro--compact">
       <div>
-        <h1 class="page-title">${isEdit ? '새 글 작성' : '글 수정'}</h1>
+        <h1 class="page-title">${isEdit ? '글 수정' : '새 글 작성'}</h1>
         <p class="page-description">질문이나 해결 방법을 작성하면 목록에 바로 보여요.</p>
       </div>
     </section>
@@ -117,7 +117,7 @@
           </button>
           <button type="submit" class="p-button btn-xl">
             <i class="pi pi-check" aria-hidden="true"></i>
-            <span>${isEdit ? '글 등록' : '수정 완료'}</span>
+            <span>${isEdit ? '수정 완료' : '글 등록' }</span>
           </button>
         </div>
       </form>
