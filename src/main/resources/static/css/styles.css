@@ -1436,3 +1436,9 @@ dialog p {
   justify-content: flex-end;
   gap: var(--space-sm);
 }
+
+.article-title {
+  max-width: 768px;
+  font-size: var(--type-title);
+  line-height: 45px;
+}

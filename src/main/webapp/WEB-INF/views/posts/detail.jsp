@@ -31,9 +31,9 @@
 
       <div class="post-head">
         <div class="author">
-          <span class="author-face" aria-hidden="true">${fn:substring(post.author, 0, 1)}</span>
+          <span class="author-face" aria-hidden="true">${fn:escapeXml(fn:substring(post.author, 0, 1))}</span>
           <div>
-            <div class="author-name">${post.author}</div>
+            <div class="author-name">${fn:escapeXml(post.author)}</div>
             <div class="author-date">${post.createdDate}</div>
           </div>
         </div>
@@ -75,7 +75,7 @@
       <ul class="comment-list">
         <c:forEach var="comment" items="${commentList}">
           <li class="comment">
-            <span class="comment-face" aria-hidden="true">${fn:substring(comment.author, 0, 1)}</span>
+            <span class="author-face" aria-hidden="true">${fn:escapeXml(fn:substring(post.author, 0, 1))}</span>
             <div>
               <div class="author-name">
                 ${fn:escapeXml(comment.author)}
